@@ -36,7 +36,7 @@ CREATE TABLE Orders (
     order_date DATE,
     CONSTRAINT fk_orders_customer
         FOREIGN KEY (customer_id)
-        REFERENCES customers(customer_id)
+        REFERENCES Customers(customer_id)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
@@ -49,12 +49,12 @@ CREATE TABLE Order_Details (
     quantity DOUBLE NOT NULL,
     CONSTRAINT fk_orderdetails_order
         FOREIGN KEY (order_id)
-        REFERENCES orders(order_id)
+        REFERENCES Orders(order_id)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
     CONSTRAINT fk_orderdetails_book
         FOREIGN KEY (book_id)
-        REFERENCES books(book_id)
+        REFERENCES Books(book_id)
         ON UPDATE CASCADE
         ON DELETE RESTRICT
 );
