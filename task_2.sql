@@ -1,48 +1,43 @@
-CREATE DATABASE IF NOT EXISTS task_2;
-USE task_2;
+USE alx_book_store;
 
--- AUTHORS TABLE
-CREATE TABLE authors (
+-- Create Authors table (Parent table for Books)
+CREATE TABLE Authors (
     author_id INT AUTO_INCREMENT PRIMARY KEY,
     author_name VARCHAR(215) NOT NULL
 );
 
--- BOOKS TABLE
-CREATE TABLE books (
+-- Create Books table (Parent table for Order_Details)
+CREATE TABLE Books (
     book_id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(130) NOT NULL,
-    author_id INT NOT NULL,
+    author_id INT,
     price DOUBLE NOT NULL,
     publication_date DATE,
-    CONSTRAINT fk_books_author
-        FOREIGN KEY (author_id)
-        REFERENCES authors(author_id)
-        ON UPDATE CASCADE
-        ON DELETE RESTRICT
+    FOREIGN KEY (author_id) REFERENCES Authors(author_id)
 );
 
--- CUSTOMERS TABLE
-CREATE TABLE customers (
+-- Create Customers table (Parent table for Orders)
+CREATE TABLE Customers (
     customer_id INT AUTO_INCREMENT PRIMARY KEY,
     customer_name VARCHAR(215) NOT NULL,
     email VARCHAR(215) NOT NULL,
     address TEXT
 );
 
--- ORDERS TABLE
-CREATE TABLE orders (
+-- Create Orders table (Parent table for Order_Details)
+CREATE TABLE Orders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
     customer_id INT,
-    order_date DATE DEFAULT (CURRENT_DATE),
-    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+    order_date DATE,
+    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
 );
 
--- ORDER DETAILS TABLE
-CREATE TABLE order_details (
+-- Create Order_Details table
+CREATE TABLE Order_Details (
     orderdetailid INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT,
     book_id INT,
     quantity DOUBLE NOT NULL,
-    FOREIGN KEY (order_id) REFERENCES orders(order_id),
-    FOREIGN KEY (book_id) REFERENCES books(book_id)
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id),
+    FOREIGN KEY (book_id) REFERENCES Books(book_id)
 );
